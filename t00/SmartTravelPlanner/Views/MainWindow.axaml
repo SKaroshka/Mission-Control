@@ -3,20 +3,55 @@
         xmlns:vm="using:SmartTravelPlanner.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
         x:Class="SmartTravelPlanner.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SmartTravelPlanner">
+        Title="SmartTravelPlanner"
+        SizeToContent="Width"
+        Height="300"
+        CanResize="False">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
+    <DockPanel Margin="15">        
+        <WrapPanel ItemSpacing="8" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+            <Button Content="Save Traveler"/>
+            <Button Content="Load Traveler"/>
+        </WrapPanel>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+        <WrapPanel ItemSpacing="100">
+            <StackPanel Spacing="8">
+                <!-- Traveler and map data input -->
+                <TextBox PlaceholderText="Traveler name"
+                        HorizontalAlignment="Left"/>
+                <TextBox PlaceholderText="Traveler starting location"
+                        HorizontalAlignment="Left"/>
+                <Button Content="Load map file..."/>
+                <TextBox PlaceholderText="Traveler destination"
+                        HorizontalAlignment="Left"/>
+                <Button Content="Plan route"/>
+            </StackPanel>
+
+            <StackPanel Spacing="8">
+                <!-- Results -->
+                <TextBlock Text="Your route:"/>
+                <TextBox Text="Lorem -> Ipsum -> Dolor -> Sit -> Amet"
+                        Width="300"
+                        MaxLines="5"
+                        IsReadOnly="True" TextWrapping="Wrap" />
+                <TextBlock Text="Total distance:"/>
+                <TextBox Text="1234 km"
+                        Width="300"
+                        IsReadOnly="True" TextWrapping="Wrap"/>
+                <Button Content="Clear route"
+                        HorizontalAlignment="Right"/>
+            </StackPanel>
+        </WrapPanel>
+    </DockPanel>
+    
 
 </Window>

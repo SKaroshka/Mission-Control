@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.IO;
-namespace Travelling
+namespace SmartTravelPlanner
 {
     public class Traveler : ICloneable
     {

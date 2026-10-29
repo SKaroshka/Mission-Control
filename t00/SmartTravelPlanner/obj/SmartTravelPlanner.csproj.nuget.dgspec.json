@@ -20,7 +20,7 @@
           "net10.0"
         ],
         "sources": {
-          "/nix/store/b8lqbpbgy4lyp46dwxks5x5i8mrvc806-dotnet-sdk-10.0.401/share/dotnet/library-packs": {},
+          "/nix/store/548nr4j8ja7h4861j0ldn957ag5bxvcd-dotnet-sdk-10.0.401/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/nix/store/b8lqbpbgy4lyp46dwxks5x5i8mrvc806-dotnet-sdk-10.0.401/share/dotnet/sdk/10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/nix/store/548nr4j8ja7h4861j0ldn957ag5bxvcd-dotnet-sdk-10.0.401/share/dotnet/sdk/10.0.401/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

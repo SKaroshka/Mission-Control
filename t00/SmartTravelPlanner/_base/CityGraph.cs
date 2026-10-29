@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TNode = System.String;
 using System.Reflection.Metadata.Ecma335;
 
-namespace Travelling
+namespace SmartTravelPlanner
 {
     public class CityGraph
     {
