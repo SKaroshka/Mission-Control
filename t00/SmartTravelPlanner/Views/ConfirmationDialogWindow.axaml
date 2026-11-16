@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmartTravelPlanner.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
+        x:Class="SmartTravelPlanner.Views.ConfirmationDialogWindow"
+        x:DataType="vm:ConfirmationDialogViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Unsaved changes"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        ShowInTaskbar="False">
+
+   <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:ConfirmationDialogViewModel />
+    </Design.DataContext>
+        <StackPanel Spacing="8"
+                Margin="15">
+                <TextBlock Text="You have unsaved changes, are you sure you want to close without saving?" />
+                <StackPanel Orientation="Horizontal" Spacing="8"
+                        HorizontalAlignment = "Right">
+                        <Button Content="Yes"
+                                Command="{Binding ConfirmCommand}"
+                                IsDefault="True"
+                                Classes="accent" />
+                        <Button Content="Cancel"
+                                Command="{Binding CancelCommand}"
+                                IsCancel="True" />
+                </StackPanel>
+        </StackPanel>
+</Window>

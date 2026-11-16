@@ -3,54 +3,69 @@
         xmlns:vm="using:SmartTravelPlanner.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:SmartTravelPlanner.Views"
         mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
         x:Class="SmartTravelPlanner.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SmartTravelPlanner"
-        SizeToContent="Width"
-        Height="300"
+        Title="{Binding TravelerFile, StringFormat='Smart Travel Planner ({0})', 
+                                TargetNullValue='Smart Travel Planner (New Traveler)'}"
+        Width="600"
+        SizeToContent="WidthAndHeight"
         CanResize="False">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
+        <!-- This only sets the DataContext for the previewer in an IDE,Smart Travel Planer {Binding }
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
-    <DockPanel Margin="15">        
-        <WrapPanel ItemSpacing="8" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
-            <Button Content="Save Traveler"/>
-            <Button Content="Load Traveler"/>
-        </WrapPanel>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+                <MenuItem Header="&#x1F5FA; Traveler">
+                        <MenuItem Header="Save data"
+                                Command="{Binding SaveTravelerCommand}" />
+                        <MenuItem Header="Load data"
+                                Command="{Binding LoadTravelerCommand}" />
+                </MenuItem>
+                <MenuItem Header="{Binding ThemeIcon}"
+                        Command="{Binding ToggleThemeCommand}" />
+        </Menu>
 
-        <WrapPanel ItemSpacing="100">
-            <StackPanel Spacing="8">
-                <!-- Traveler and map data input -->
-                <TextBox PlaceholderText="Traveler name"
-                        HorizontalAlignment="Left"/>
-                <TextBox PlaceholderText="Traveler starting location"
-                        HorizontalAlignment="Left"/>
-                <Button Content="Load map file..."/>
-                <TextBox PlaceholderText="Traveler destination"
-                        HorizontalAlignment="Left"/>
-                <Button Content="Plan route"/>
-            </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                DockPanel.Dock="Bottom" 
+                Spacing="8"
+                HorizontalAlignment="Center" Margin="15">
+                <Button Content="Entering name"
+                        IsEnabled="{Binding IsNameView}" />
+                <TextBlock Text="->"
+                           VerticalAlignment="Center" />
+                <Button Content="Loading map"
+                        IsEnabled="{Binding IsMapView}"/>
+                <TextBlock Text="->"
+                           VerticalAlignment="Center" />
+                <Button Content="Setting up point A&amp;B"
+                        IsEnabled="{Binding IsInputView}" />
+                <TextBlock Text="->"
+                           VerticalAlignment="Center" />
+                <Button Content="Getting route"
+                        IsEnabled="{Binding IsOutputView}" />
+        </StackPanel>
 
-            <StackPanel Spacing="8">
-                <!-- Results -->
-                <TextBlock Text="Your route:"/>
-                <TextBox Text="Lorem -> Ipsum -> Dolor -> Sit -> Amet"
-                        Width="300"
-                        MaxLines="5"
-                        IsReadOnly="True" TextWrapping="Wrap" />
-                <TextBlock Text="Total distance:"/>
-                <TextBox Text="1234 km"
-                        Width="300"
-                        IsReadOnly="True" TextWrapping="Wrap"/>
-                <Button Content="Clear route"
-                        HorizontalAlignment="Right"/>
-            </StackPanel>
-        </WrapPanel>
+        <StackPanel DockPanel.Dock="Bottom"
+                HorizontalAlignment="Center" Margin="0,7,0,0">
+                <TextBlock Text="{Binding FormattedSavedData}"
+                        Foreground="Gray"
+                        TextAlignment="Center"
+                        LineSpacing="7" />
+        </StackPanel>
+
+        <Carousel SelectedIndex="{Binding CurrentPageIndex}"
+                Margin="12">
+                <views:NameView />
+                <views:MapView />
+                <views:InputView />
+                <views:OutputView />
+        </Carousel>
     </DockPanel>
     
 

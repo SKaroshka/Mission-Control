@@ -1,4 +1,0 @@
-Kyiv-Lviv,540
-Lviv-Warsaw,390
-Kyiv-Warsaw,1000
-Kyiv-Odesa,480

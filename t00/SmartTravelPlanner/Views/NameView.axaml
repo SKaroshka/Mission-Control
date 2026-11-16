@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmartTravelPlanner.ViewModels"
+        x:Class="SmartTravelPlanner.Views.NameView"
+        x:DataType="vm:MainViewModel">
+
+    <StackPanel Spacing="20">
+        <StackPanel Spacing="4"
+            HorizontalAlignment="Center">
+            <TextBlock Text="Traveler's name"
+                Name="nameLabel"
+                HorizontalAlignment="Left" />
+            <TextBox PlaceholderText="Jonh Leng" Text="{Binding TravelerFile, UpdateSourceTrigger=LostFocus}"
+                Width="200" HorizontalAlignment="Center" />
+        </StackPanel>
+        <Button Content="Continue -&gt;"
+            Command="{Binding GoToMapViewCommand}"
+            IsDefault="True"
+            HorizontalAlignment="Right" />
+    </StackPanel>
+    
+</UserControl>

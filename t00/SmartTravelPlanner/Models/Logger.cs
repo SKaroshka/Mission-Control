@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-namespace SmartTravelPlanner
+
+namespace SmartTravelPlanner.Models
 {
     public class Logger<T>
     {

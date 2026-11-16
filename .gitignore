@@ -1,2 +1,4 @@
 t00/SmartTravelPlanner/bin/
-t00/SmartTravelPlanner/obj/Debug/
+t00/SmartTravelPlanner/obj/
+/t00/SmartTravelPlanner/traveler.json
+/t00/SmartTravelPlanner/log.txt

@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmartTravelPlanner.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
+        x:Class="SmartTravelPlanner.Views.MapDialogWindow"
+        x:DataType="vm:MapDialogViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="{Binding EditorTitle}"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"
+        ShowInTaskbar="False">
+
+   <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MapDialogViewModel />
+    </Design.DataContext>
+        <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="_File">
+                                <MenuItem Header="Save and exit"
+                                        Command="{Binding SaveMapCommand}"/>
+                                <MenuItem Header="_Exit"
+                                        Command="{Binding ExitMapCommand}"/>
+                        </MenuItem>                
+                </Menu>
+                <StackPanel Spacing="8"
+                        Margin="15" >
+                        <ListBox ItemsSource="{Binding EditorFormattedMapFileLines}"
+                                SelectedItem="{Binding EditorMapSelection}"
+                                MaxHeight="300"
+                                HorizontalAlignment="Stretch" Margin="0, 0, 0, 4" />
+                        <Button Content="Remove from map"
+                                Command="{Binding RemoveCityCommand}"
+                                HorizontalAlignment="Stretch" Margin="0, 0, 0, 16"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">        
+                                <TextBox PlaceholderText="Start city" Text="{Binding EditorStartPoint, UpdateSourceTrigger=LostFocus}"
+                                VerticalAlignment="Top" Width="140"/>
+                                <TextBox PlaceholderText="End city" Text="{Binding EditorEndPoint, UpdateSourceTrigger=LostFocus}"
+                                VerticalAlignment="Top" Width="140"/>
+                                <TextBox PlaceholderText="Distance between" Text="{Binding EditorPointsDistance}"
+                                VerticalAlignment="Top" Width="160"/>
+                                <Button Content="Add to map"
+                                        Command="{Binding AddCityCommand}"
+                                        VerticalAlignment="Top"/>
+                        </StackPanel>
+                </StackPanel>
+        </DockPanel>
+</Window>

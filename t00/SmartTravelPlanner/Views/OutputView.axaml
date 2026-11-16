@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmartTravelPlanner.ViewModels"
+        x:Class="SmartTravelPlanner.Views.OutputView"
+        x:DataType="vm:MainViewModel">
+
+        <StackPanel Spacing="20">
+                <StackPanel Spacing="8">
+                        <StackPanel Spacing="4"
+                                HorizontalAlignment="Center">
+                                <TextBlock Text="Your route"
+                                        HorizontalAlignment="Left" />
+                                <TextBox Text="{Binding Route}"
+                                        MaxLines="5" TextWrapping="Wrap"
+                                        Width="300" HorizontalAlignment="Center"
+                                        IsReadOnly="True" />
+                        </StackPanel>
+                        <StackPanel Spacing="4"
+                                HorizontalAlignment="Center">
+                                <TextBlock Text="Total distance of your journey"
+                                        HorizontalAlignment="Left" />
+                                <TextBox PlaceholderText="0 km" Text="{Binding Distance}"
+                                        TextWrapping="Wrap"
+                                        Width="300" HorizontalAlignment="Center"
+                                        IsReadOnly="True" />
+                        </StackPanel>
+                        <Button Content="Clear route"
+                                Command="{Binding ClearRouteCommand}"
+                                HorizontalAlignment="Left" />
+                </StackPanel>
+                <WrapPanel HorizontalAlignment="Right">
+                        <Button Content="&lt;- Go back"
+                                Command="{Binding GoToInputViewCommand}"
+                                IsCancel="True" />
+                        <Button Content="Plan new travel -&gt;"
+                                Command="{Binding CreateNewTravelerCommand}" />
+                </WrapPanel>
+        </StackPanel>
+
+</UserControl>

@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmartTravelPlanner.ViewModels"
+        x:Class="SmartTravelPlanner.Views.InputView"
+        x:DataType="vm:MainViewModel">
+
+        <StackPanel Spacing="20">
+                <StackPanel Spacing="8">
+                        <StackPanel Spacing="4"
+                                HorizontalAlignment="Center">
+                                <TextBlock Text="Current location"
+                                        HorizontalAlignment="Left" />
+                                <AutoCompleteBox PlaceholderText="Izum" Text="{Binding StartLocation, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding CitiesCollection}"
+                                        Width="200" />
+                        </StackPanel>
+                        <StackPanel Spacing="4"
+                                HorizontalAlignment="Center">
+                                <TextBlock Text="Destination  of the travel"
+                                        HorizontalAlignment="Left" />
+                                <AutoCompleteBox PlaceholderText="Kupiansk" Text="{Binding Destination, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding CitiesCollection}"
+                                        Width="200" />
+                        </StackPanel>
+                </StackPanel>
+                <WrapPanel HorizontalAlignment="Right">
+                                <Button Content="&lt;- Go back"
+                                        Command="{Binding GoToMapViewCommand}"
+                                        IsCancel="True" />
+                                <Button Content="Plan route -&gt;"
+                                        Command="{Binding PlanRouteCommand}"
+                                        IsDefault="True" />
+                </WrapPanel>
+        </StackPanel>
+
+</UserControl>

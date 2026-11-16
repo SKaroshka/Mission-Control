@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmartTravelPlanner.ViewModels"
+        x:Class="SmartTravelPlanner.Views.MapView"
+        x:DataType="vm:MainViewModel">
+
+        <StackPanel Spacing="20">
+                <StackPanel Spacing="8">
+                        <TextBox PlaceholderText="No map file loaded" Text="{Binding MapFileName}"
+                                Width="300" HorizontalAlignment="Center"
+                                IsReadOnly="True" />
+                        <StackPanel Orientation="Horizontal" Spacing="4" Width="200" HorizontalAlignment="Center">
+                                <Button Content="{Binding LoadMapButtonContent}"
+                                        HorizontalContentAlignment="Center"
+                                        Command="{Binding LoadMapCommand}"
+                                        Width="150" />
+                                <Button Content="+"
+                                        Command="{Binding CreateNewMapCommand}"
+                                        Width="30" HorizontalContentAlignment="Center" />
+                                <Button Content="-"
+                                        Command="{Binding UnloadMapCommand}"
+                                        IsEnabled="{Binding IsOpenEditorButtonEnabled}"
+                                        Width="30" HorizontalContentAlignment="Center" />
+                        </StackPanel>
+                        <TextBox PlaceholderText="Nothing to preview" Text="{Binding MapPreview}" 
+                                TextAlignment="Center"
+                                MaxLines="10" TextWrapping="Wrap"
+                                Width="300" HorizontalAlignment="Center"
+                                IsReadOnly="True" />
+                        <Button Content="Edit map"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding OpenEditorCommand}"
+                                IsEnabled="{Binding IsOpenEditorButtonEnabled}"
+                                Width="80" HorizontalAlignment="Center" />
+                </StackPanel>
+                <WrapPanel HorizontalAlignment="Right">
+                        <Button Content="&lt;- Go back"
+                                Command="{Binding GoToNameViewCommand}"
+                                IsCancel="True" />
+                        <Button Content="Continue -&gt;"
+                                Command="{Binding GoToInputViewCommand}"
+                                IsDefault="True" />
+                </WrapPanel>
+        </StackPanel>
+    
+
+</UserControl>
