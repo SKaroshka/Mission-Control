@@ -28,7 +28,7 @@ public partial class MapDialogWindow : Window
 
         if (_canClose)
             return;
-        
+
         if (DataContext is MapDialogViewModel vm)
         {
             e.Cancel = true;

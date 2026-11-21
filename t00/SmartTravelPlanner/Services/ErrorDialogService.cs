@@ -10,11 +10,15 @@ using SmartTravelPlanner.ViewModels;
 
 namespace SmartTravelPlanner.Services;
 
-public class ErrorDialogService : IErrorDialogService {
-    private Window? GetActiveWindow() {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
+public class ErrorDialogService : IErrorDialogService
+{
+    private Window? GetActiveWindow()
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
             return desktop.Windows.FirstOrDefault(w => w.IsActive) ?? desktop.MainWindow;
-        };
+        }
+        ;
         return null;
     }
 

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 namespace SmartTravelPlanner.Models;
 
 public class BaseModel
-{  
+{
     private static Traveler? TravelerClone;
 
     public static ObservableCollection<string> UpdateMapFileLines(string? mapFilePath, ObservableCollection<string> mapFileLines)
@@ -19,9 +19,10 @@ public class BaseModel
             string[] lines = File.ReadAllLines(mapFilePath);
             foreach (string line in lines)
             {
-              mapFileLines.Add(line);
+                mapFileLines.Add(line);
             }
-        };
+        }
+        ;
         return mapFileLines;
     }
 
@@ -30,23 +31,24 @@ public class BaseModel
         string formattedMapFileLine = String.Empty;
         ObservableCollection<string> formattedMapFileLinesCollection = [];
         foreach (string line in mapFileLines)
+        {
+            if (!string.IsNullOrWhiteSpace(line))
             {
-                if (!string.IsNullOrWhiteSpace(line))
+                string[] parts = line.Split(',');
+                if (parts.Length == 2)
                 {
-                    string[] parts = line.Split(',');
-                    if (parts.Length == 2)
-                    {
-                        string[] cities = parts[0].Split('-');
-                        formattedMapFileLine = String.Join(" -> ", cities) + " : " + parts[1] + "km";
-                    };
-                    formattedMapFileLinesCollection.Add(formattedMapFileLine);
+                    string[] cities = parts[0].Split('-');
+                    formattedMapFileLine = String.Join(" -> ", cities) + " : " + parts[1] + "km";
                 }
+                ;
+                formattedMapFileLinesCollection.Add(formattedMapFileLine);
             }
+        }
         formattedMapFileLinesCollection = new(formattedMapFileLinesCollection.OrderBy(i => i));
         return formattedMapFileLinesCollection;
     }
 
-    public static string FormatSavedData(string? travelerFile, string? mapFileName, 
+    public static string FormatSavedData(string? travelerFile, string? mapFileName,
                                     string? startLocation, string? destination,
                                     string? route, string? distance)
     {
@@ -92,27 +94,30 @@ public class BaseModel
         return formattedSavedData;
     }
 
-    public static ObservableCollection<string>? GetCitiesCollection(ObservableCollection<string>? mapFileLines) {
+    public static ObservableCollection<string>? GetCitiesCollection(ObservableCollection<string>? mapFileLines)
+    {
         ObservableCollection<string> citiesCollection = [];
         if (mapFileLines == null)
         {
             return null;
         }
-        
+
         foreach (string line in mapFileLines)
+        {
+            if (!string.IsNullOrWhiteSpace(line))
             {
-                if (!string.IsNullOrWhiteSpace(line))
+                string[] parts = line.Split(',');
+                if (parts.Length == 2)
                 {
-                    string[] parts = line.Split(',');
-                    if (parts.Length == 2)
+                    string[] cities = parts[0].Split('-');
+                    foreach (string city in cities)
                     {
-                        string[] cities = parts[0].Split('-');
-                        foreach (string city in cities) {
-                            citiesCollection.Add(city);
-                        }
-                    };
+                        citiesCollection.Add(city);
+                    }
                 }
+                ;
             }
+        }
         citiesCollection = new(citiesCollection.Distinct());
         citiesCollection = new(citiesCollection.OrderBy(i => i));
         return citiesCollection;
@@ -122,7 +127,7 @@ public class BaseModel
     {
         if (string.IsNullOrEmpty(mapFilePath) || string.IsNullOrEmpty(travelerFile))
         {
-            return(["","","Map file or traveler name missing"]);
+            return (["", "", "Map file or traveler name missing"]);
         }
 
         CityGraph graph;
@@ -157,14 +162,14 @@ public class BaseModel
             logger.Add($"Traveler {traveler.GetName()} planned route {startLocation} -> {destination}");
             logger.Flush("log.txt");
             traveler.SetLocation(destination);
-            string[] outputTraveler = {(traveler.GetRoute()), (distance + " km"), ""};
+            string[] outputTraveler = { (traveler.GetRoute()), (distance + " km"), "" };
             TravelerClone = traveler;
             return outputTraveler;
         }
         else
         {
             Console.WriteLine("No route to find!");
-            string[] outputTraveler = {"", "", "Destination not reachable"};
+            string[] outputTraveler = { "", "", "Destination not reachable" };
             return outputTraveler;
         }
     }
@@ -180,7 +185,7 @@ public class BaseModel
         {
             TravelerClone = new(travelerFile);
         }
-        
+
         return TravelerClone;
     }
 

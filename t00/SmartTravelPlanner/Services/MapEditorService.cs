@@ -12,12 +12,15 @@ using SmartTravelPlanner.ViewModels;
 
 namespace SmartTravelPlanner.Services;
 
-public class MapEdtorService : IMapEditorService {
-    private Window? GetMainWindow() {
+public class MapEdtorService : IMapEditorService
+{
+    private Window? GetMainWindow()
+    {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             return desktop.MainWindow;
-        };
+        }
+        ;
         return null;
     }
 

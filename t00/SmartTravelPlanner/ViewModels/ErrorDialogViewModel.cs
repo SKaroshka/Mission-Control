@@ -13,14 +13,15 @@ public partial class ErrorDialogViewModel : ViewModelBase
     public partial string ErrorMessage { get; set; } = String.Empty;
 
     public Action<bool>? RequestClose { get; set; }
-    
+
     public ErrorDialogViewModel(string errorMessage)
     {
         ErrorMessage = errorMessage;
     }
 
     [RelayCommand]
-    private async Task Exit() {
+    private async Task Exit()
+    {
         RequestClose?.Invoke(false);
     }
 }

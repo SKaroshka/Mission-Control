@@ -4,12 +4,12 @@ using System.Text.Json;
 using System.IO;
 
 namespace SmartTravelPlanner.Models;
-    
+
 public class Traveler : ICloneable
 {
     private string name;
     private string currentLocation = string.Empty;
-    private List<string> route = new List<string>(); 
+    private List<string> route = new List<string>();
 
     public Traveler(string name) => this.name = name = name?.Trim() ?? string.Empty;
     public string GetName() => name;
@@ -17,7 +17,7 @@ public class Traveler : ICloneable
     {
         if (string.IsNullOrWhiteSpace(city))
             return city;
-        
+
         string[] word = city.Split(' ');
         for (int x = 0; x < word.Length; x++)
         {
@@ -32,7 +32,7 @@ public class Traveler : ICloneable
     {
         if (string.IsNullOrEmpty(location))
             currentLocation = location;
-        else 
+        else
             currentLocation = FormatName(location);
     }
     public string GetLocation() => currentLocation;
@@ -79,7 +79,7 @@ public class Traveler : ICloneable
     }
     public string this[int index]
     {
-        get {return route[index];}
+        get { return route[index]; }
     }
     //t00 virtual method
     public virtual string GetTravelSummary()
@@ -120,7 +120,7 @@ public class Traveler : ICloneable
 
     public object Clone()
     {
-        Traveler cloneTraveler = new Traveler (this.name);
+        Traveler cloneTraveler = new Traveler(this.name);
         cloneTraveler.currentLocation = this.currentLocation;
         cloneTraveler.route = new List<string>(this.route);
 
@@ -144,7 +144,7 @@ public class Traveler : ICloneable
     }
     public static Traveler LoadFromFile(string filePath)
     {
-        if (!File.Exists(filePath)) 
+        if (!File.Exists(filePath))
         {
             throw new FileNotFoundException("File doesn't exist");
         }

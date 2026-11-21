@@ -65,7 +65,7 @@ public partial class MapDialogViewModel : ViewModelBase
         if (value is not null && value != value.Trim())
             EditorEndPoint = value.Trim();
     }
-    
+
     public MapDialogViewModel(string mapFilePath, ObservableCollection<string> mapFileLines)
     {
         EditorMapFilePath = mapFilePath;
@@ -96,9 +96,9 @@ public partial class MapDialogViewModel : ViewModelBase
     {
         if (!String.IsNullOrEmpty(EditorMapSelection) && !String.IsNullOrEmpty(EditorMapFilePath))
         {
-            string? mapFileLine = EditorMapFileLines.FirstOrDefault(line => 
+            string? mapFileLine = EditorMapFileLines.FirstOrDefault(line =>
                 BaseModel.FormatMapFileLines([line]).FirstOrDefault() == EditorMapSelection);
-            
+
             if (mapFileLine != null)
             {
                 EditorMapFileLines.Remove(mapFileLine);
@@ -123,29 +123,30 @@ public partial class MapDialogViewModel : ViewModelBase
         {
             return;
         }
-        
+
         if (String.IsNullOrEmpty(EditorMapFilePath))
         {
             await ShowErrorDialog("Please ensure that the file exists");
 
             return;
         }
-        
+
         string? newMapFileLine = EditorStartPoint + "-" + EditorEndPoint + "," + EditorPointsDistance;
         if (!MapLinePattern().IsMatch(newMapFileLine))
-            {
-                newMapFileLine = null;
-                await ShowErrorDialog("Use valid format e.g. City Town 404");
+        {
+            newMapFileLine = null;
+            await ShowErrorDialog("Use valid format e.g. City Town 404");
 
-                return;
-            };
+            return;
+        }
+        ;
         EditorMapFileLines.Add(newMapFileLine);
         EditorStartPoint = String.Empty;
         EditorEndPoint = String.Empty;
         EditorPointsDistance = String.Empty;
         EditorTitle = ($"Editing map file \u2013 {EditorMapFilePath}*");
         _hasUnsavedChanges = true;
-        
+
         ClearErrors();
     }
 
@@ -166,7 +167,7 @@ public partial class MapDialogViewModel : ViewModelBase
     {
         if (!_hasUnsavedChanges)
             return true;
-        
+
         var confirmationDialogService = new ConfirmationDialogService();
         return await confirmationDialogService.ShowConfirmationDialogAsync();
     }

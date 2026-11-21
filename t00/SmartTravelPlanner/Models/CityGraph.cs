@@ -11,8 +11,8 @@ namespace SmartTravelPlanner.Models
     {
         public class TEdge
         {
-            public TNode City {get; set;}
-            public int Distance {get; set;}
+            public TNode City { get; set; }
+            public int Distance { get; set; }
             public TEdge(string city, int distance)
             {
                 City = city;
@@ -60,7 +60,7 @@ namespace SmartTravelPlanner.Models
                             }
                             edgesB.Add(new TEdge(cityA, distance));
                             graph.orderedGraph.Add($"{cityA}-{cityB},{distance}");
-                            graph.orderedGraph.Add($"{cityB}-{cityA},{distance}"); 
+                            graph.orderedGraph.Add($"{cityB}-{cityA},{distance}");
                         }
                     }
                 }

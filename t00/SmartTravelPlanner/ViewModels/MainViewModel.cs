@@ -44,13 +44,13 @@ public partial class MainViewModel : ViewModelBase
 
     [RelayCommand]
     private async Task GoToNameView()
-    {   
+    {
         CurrentPageIndex = 0;
         IsNameView = true;
         IsMapView = false;
         IsInputView = false;
         IsOutputView = false;
-        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName, 
+        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName,
                                                     StartLocation, Destination,
                                                     Route, Distance);
         ClearErrors();
@@ -65,13 +65,13 @@ public partial class MainViewModel : ViewModelBase
         {
             return;
         }
-        
+
         CurrentPageIndex = 1;
         IsNameView = false;
         IsMapView = true;
         IsInputView = false;
         IsOutputView = false;
-        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName, 
+        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName,
                                                     StartLocation, Destination,
                                                     Route, Distance);
         ClearErrors();
@@ -92,7 +92,7 @@ public partial class MainViewModel : ViewModelBase
         IsMapView = false;
         IsInputView = true;
         IsOutputView = false;
-        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName, 
+        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName,
                                                     StartLocation, Destination,
                                                     Route, Distance);
         ClearErrors();
@@ -106,7 +106,7 @@ public partial class MainViewModel : ViewModelBase
         IsMapView = false;
         IsInputView = false;
         IsOutputView = true;
-        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName, 
+        FormattedSavedData = BaseModel.FormatSavedData(TravelerFile, MapFileName,
                                                     StartLocation, Destination,
                                                     Route, Distance);
         ClearErrors();
@@ -232,7 +232,8 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task ClearRoute()
     {
-        if (_traveler is not null) {
+        if (_traveler is not null)
+        {
             _traveler.ClearRoute();
             Route = _traveler.GetRoute();
             Distance = String.Empty;
@@ -263,7 +264,8 @@ public partial class MainViewModel : ViewModelBase
                     await ShowErrorDialog("Invalid map format");
 
                     return;
-                };
+                }
+                ;
             }
             MapFileLines.Clear();
             MapLoadedUIUpdate();
@@ -294,7 +296,7 @@ public partial class MainViewModel : ViewModelBase
         {
             return;
         }
-        
+
         var planRouteResults = await BaseModel.PlanRoute(MapFilePath, TravelerFile, StartLocation, Destination);
 
         if (planRouteResults is null)
@@ -333,7 +335,8 @@ public partial class MainViewModel : ViewModelBase
     {
         var filePickerService = new FilePickerService();
         var filePath = await filePickerService.OpenFilePickerAsync("Load traveler's file", "", FileTypeOption.Json);
-        if (!String.IsNullOrEmpty(filePath)) {
+        if (!String.IsNullOrEmpty(filePath))
+        {
             try
             {
                 _traveler = Traveler.LoadFromFile(filePath);
@@ -349,7 +352,8 @@ public partial class MainViewModel : ViewModelBase
             Route = _traveler.GetRoute();
             Distance = String.Empty;
             await GoToMapView();
-        };
+        }
+        ;
     }
 
     [RelayCommand]

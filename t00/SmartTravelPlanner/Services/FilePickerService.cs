@@ -18,7 +18,8 @@ public class FilePickerService : IFilePickerService
         _ => FilePickerFileTypes.All
     };
 
-    public async Task<string?> OpenFilePickerAsync(string title, string defaultName, params FileTypeOption[] options) {
+    public async Task<string?> OpenFilePickerAsync(string title, string defaultName, params FileTypeOption[] options)
+    {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var topLevel = TopLevel.GetTopLevel(desktop.MainWindow);
@@ -30,7 +31,7 @@ public class FilePickerService : IFilePickerService
             {
                 Title = title,
                 AllowMultiple = false,
-                SuggestedFileName=defaultName,
+                SuggestedFileName = defaultName,
                 FileTypeFilter = fileTypeFilters.Count > 0 ? fileTypeFilters : null
             });
 
@@ -52,7 +53,7 @@ public class FilePickerService : IFilePickerService
             var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
             {
                 Title = title,
-                SuggestedFileName=defaultName,
+                SuggestedFileName = defaultName,
                 FileTypeChoices = fileTypeFilters.Count > 0 ? fileTypeFilters : null
             });
 

@@ -33,7 +33,7 @@ public class IsCity : ValidationAttribute
         {
             return new ValidationResult(ErrorMessage ?? "Please enter existing city from the map");
         }
-        
+
         return ValidationResult.Success;
     }
 }

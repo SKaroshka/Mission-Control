@@ -16,7 +16,7 @@ public class ThemeService : IThemeService
         }
     }
 
-    public bool IsDarkTheme => 
+    public bool IsDarkTheme =>
         Application.Current?.ActualThemeVariant == ThemeVariant.Dark;
 
     public void SetTheme(bool IsDark)
