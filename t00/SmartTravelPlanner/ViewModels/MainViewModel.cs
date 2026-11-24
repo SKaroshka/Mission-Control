@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 
 using SmartTravelPlanner.Models;
 using SmartTravelPlanner.Services;
+using Avalonia.Controls.ApplicationLifetimes;
 
 
 namespace SmartTravelPlanner.ViewModels;
@@ -123,6 +124,12 @@ public partial class MainViewModel : ViewModelBase
         _themeService.ToggleTheme();
         UpdateThemeIcon();
     }
+
+    // All-app interactions
+    public Action? ExitAction { get; set; }
+
+    [RelayCommand]
+    private void Exit() => ExitAction?.Invoke();
 
     // Main
     // Input properties
@@ -269,6 +276,7 @@ public partial class MainViewModel : ViewModelBase
                 if (!MapFileLinePattern().IsMatch(line))
                 {
                     MapFilePath = String.Empty;
+                    MapUIUpdate();
 
                     await ShowErrorDialog("Invalid map format");
 

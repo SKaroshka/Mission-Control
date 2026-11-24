@@ -4,19 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="using:SmartTravelPlanner.Views"
-        mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
+        mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="280"
         x:Class="SmartTravelPlanner.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/app.ico"
         Title="{Binding TravelerFile, StringFormat='Smart Travel Planner ({0})', 
                                 TargetNullValue='Smart Travel Planner (New Traveler)'}"
-        Width="600"
+        Width="615"
         SizeToContent="WidthAndHeight"
         CanResize="False">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,Smart Travel Planer {Binding }
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainViewModel />
     </Design.DataContext>
     <DockPanel>
@@ -40,6 +38,9 @@
                 </MenuItem>
                 <MenuItem Header="{Binding ThemeIcon}"
                         Command="{Binding ToggleThemeCommand}" />
+                <MenuItem Header="&#x2715; Exit"
+                        Command="{Binding ExitCommand}"
+                        Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" />
         </Menu>
 
         <StackPanel Orientation="Horizontal"
