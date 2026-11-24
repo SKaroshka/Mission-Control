@@ -10,10 +10,10 @@
             <TextBlock Text="Traveler's name"
                 Name="nameLabel"
                 HorizontalAlignment="Left" />
-            <TextBox PlaceholderText="Jonh Leng" Text="{Binding TravelerFile, UpdateSourceTrigger=LostFocus}"
+            <TextBox PlaceholderText="Jonh Leng" Text="{Binding TravelerFile}"
                 Width="200" HorizontalAlignment="Center" />
         </StackPanel>
-        <Button Content="Continue -&gt;"
+        <Button Content="Create Traveler -&gt;"
             Command="{Binding GoToMapViewCommand}"
             IsDefault="True"
             HorizontalAlignment="Right" />

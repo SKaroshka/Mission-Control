@@ -16,7 +16,6 @@ public interface IFilePickerService
 public interface IMapEditorService
 {
     Task<bool> ShowMapDialogAsync(string mapFilePath, ObservableCollection<string> mapFileLines);
-    // Task<bool> ShowConfirmationDialog(string title, string message);
 }
 
 public interface IErrorDialogService

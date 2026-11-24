@@ -18,7 +18,6 @@ public class ConfirmationDialogService : IConfirmationDialogService
         {
             return desktop.Windows.FirstOrDefault(w => w.IsActive) ?? desktop.MainWindow;
         }
-        ;
         return null;
     }
 

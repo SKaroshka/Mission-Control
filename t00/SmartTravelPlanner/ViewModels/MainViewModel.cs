@@ -163,6 +163,9 @@ public partial class MainViewModel : ViewModelBase
     public partial string FormattedSavedData { get; set; } = String.Empty;
 
     [ObservableProperty]
+    public partial bool IsSaveTravelerMenuItemEnabled { get; set; } = false;
+
+    [ObservableProperty]
     public partial ObservableCollection<string> MapFileLines { get; set; } = [];
 
     [ObservableProperty]
@@ -199,15 +202,24 @@ public partial class MainViewModel : ViewModelBase
             TravelerFile = value.Trim();
     }
 
-    private async void MapLoadedUIUpdate()
+    private void MapUIUpdate()
     {
         if (!String.IsNullOrEmpty(MapFilePath))
+        {
             IsOpenEditorButtonEnabled = true;
-
-        LoadMapButtonContent = "Change file...";
-        MapFileName = $"{System.IO.Path.GetFileName(MapFilePath)} — map loaded";
-        MapFileLines = BaseModel.UpdateMapFileLines(MapFilePath, MapFileLines);
-        MapPreview = String.Join(Environment.NewLine, BaseModel.FormatMapFileLines(MapFileLines));
+            LoadMapButtonContent = "Change file...";
+            MapFileName = $"{System.IO.Path.GetFileName(MapFilePath)} — map loaded";
+            MapFileLines = BaseModel.UpdateMapFileLines(MapFilePath, MapFileLines);
+            MapPreview = String.Join(Environment.NewLine, BaseModel.FormatMapFileLines(MapFileLines));
+        }
+        else
+        {
+            IsOpenEditorButtonEnabled = false;
+            LoadMapButtonContent = "Load map file...";
+            MapFileName = String.Empty;
+            MapFileLines.Clear();
+            MapPreview = String.Empty;
+        }
     }
 
     private async Task OpenMapEditor()
@@ -237,6 +249,7 @@ public partial class MainViewModel : ViewModelBase
             _traveler.ClearRoute();
             Route = _traveler.GetRoute();
             Distance = String.Empty;
+            IsSaveTravelerMenuItemEnabled = false;
             await GoToInputView();
         }
     }
@@ -256,19 +269,14 @@ public partial class MainViewModel : ViewModelBase
                 if (!MapFileLinePattern().IsMatch(line))
                 {
                     MapFilePath = String.Empty;
-                    IsOpenEditorButtonEnabled = false;
-                    LoadMapButtonContent = "Load map file...";
-                    MapFileName = String.Empty;
-                    MapFileLines.Clear();
-                    MapPreview = String.Empty;
+
                     await ShowErrorDialog("Invalid map format");
 
                     return;
                 }
-                ;
             }
             MapFileLines.Clear();
-            MapLoadedUIUpdate();
+            MapUIUpdate();
             CitiesCollection = BaseModel.GetCitiesCollection(MapFileLines) ?? [];
         }
     }
@@ -276,14 +284,10 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task UnloadMap()
     {
-        LoadMapButtonContent = "Load map file...";
         MapFilePath = String.Empty;
-        IsOpenEditorButtonEnabled = false;
-        MapFileLines.Clear();
+        MapUIUpdate();
         FormattedMapFileLinesCollection.Clear();
         CitiesCollection.Clear();
-        MapFileName = String.Empty;
-        MapPreview = String.Empty;
         IsEditorSavedMap = false;
     }
 
@@ -312,6 +316,7 @@ public partial class MainViewModel : ViewModelBase
         Route = planRouteResults[0];
         Distance = planRouteResults[1];
         _traveler = BaseModel.GetTravelerClone(TravelerFile);
+        IsSaveTravelerMenuItemEnabled = true;
         await GoToOutputView();
     }
 
@@ -353,7 +358,6 @@ public partial class MainViewModel : ViewModelBase
             Distance = String.Empty;
             await GoToMapView();
         }
-        ;
     }
 
     [RelayCommand]
@@ -373,7 +377,7 @@ public partial class MainViewModel : ViewModelBase
             File.WriteAllLines(filePath, ["City1-City2,404"]);
             MapFileLines.Clear();
             MapFilePath = filePath;
-            MapLoadedUIUpdate();
+            MapUIUpdate();
             await OpenMapEditor();
         }
     }
@@ -381,22 +385,18 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task CreateNewTraveler()
     {
+        _traveler = null;
         TravelerFile = null;
-        LoadMapButtonContent = "Load map file...";
         MapFilePath = String.Empty;
-        IsOpenEditorButtonEnabled = false;
-        StartLocation = String.Empty;
-        Destination = String.Empty;
-        Route = String.Empty;
-        Distance = String.Empty;
+        MapUIUpdate();
+        StartLocation = Destination = Route = Distance = String.Empty;
         FormattedSavedData = String.Empty;
-        MapFileLines.Clear();
+
         FormattedMapFileLinesCollection.Clear();
         CitiesCollection.Clear();
-        MapFileName = String.Empty;
-        MapPreview = String.Empty;
+
         IsEditorSavedMap = false;
-        _traveler = null;
+        IsSaveTravelerMenuItemEnabled = false;
 
         await GoToNameView();
     }

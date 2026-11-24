@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
         x:Class="SmartTravelPlanner.Views.MapDialogWindow"
         x:DataType="vm:MapDialogViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/app.ico"
         Title="{Binding EditorTitle}"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
@@ -22,9 +22,19 @@
                 <Menu DockPanel.Dock="Top">
                         <MenuItem Header="_File">
                                 <MenuItem Header="Save and exit"
-                                        Command="{Binding SaveMapCommand}"/>
+                                        Command="{Binding SaveMapCommand}">
+                                        <MenuItem.Icon>
+                                                <TextBlock Text="&#x1F4BE;"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Header="_Exit"
-                                        Command="{Binding ExitMapCommand}"/>
+                                        Command="{Binding ExitMapCommand}">
+                                        <MenuItem.Icon>
+                                                        <TextBlock Text="&#x2715;"
+                                                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </MenuItem.Icon>
+                                </MenuItem>
                         </MenuItem>                
                 </Menu>
                 <StackPanel Spacing="8"

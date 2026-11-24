@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
         x:Class="SmartTravelPlanner.Views.MainWindow"
         x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/app.ico"
         Title="{Binding TravelerFile, StringFormat='Smart Travel Planner ({0})', 
                                 TargetNullValue='Smart Travel Planner (New Traveler)'}"
         Width="600"
@@ -21,11 +21,22 @@
     </Design.DataContext>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-                <MenuItem Header="&#x1F5FA; Traveler">
-                        <MenuItem Header="Save data"
-                                Command="{Binding SaveTravelerCommand}" />
-                        <MenuItem Header="Load data"
-                                Command="{Binding LoadTravelerCommand}" />
+                <MenuItem Header="&#x1F464; Traveler">
+                        <MenuItem Header="Save"
+                                Command="{Binding SaveTravelerCommand}"
+                                IsEnabled="{Binding IsSaveTravelerMenuItemEnabled}">
+                                <MenuItem.Icon>
+                                        <TextBlock Text="&#x1F4BE;"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Load"
+                                Command="{Binding LoadTravelerCommand}">
+                                <MenuItem.Icon>
+                                        <TextBlock Text="&#x1F4C2;"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </MenuItem.Icon>
+                        </MenuItem>
                 </MenuItem>
                 <MenuItem Header="{Binding ThemeIcon}"
                         Command="{Binding ToggleThemeCommand}" />
@@ -35,7 +46,7 @@
                 DockPanel.Dock="Bottom" 
                 Spacing="8"
                 HorizontalAlignment="Center" Margin="15">
-                <Button Content="Entering name"
+                <Button Content="Creating traveler"
                         IsEnabled="{Binding IsNameView}" />
                 <TextBlock Text="->"
                            VerticalAlignment="Center" />
@@ -43,7 +54,7 @@
                         IsEnabled="{Binding IsMapView}"/>
                 <TextBlock Text="->"
                            VerticalAlignment="Center" />
-                <Button Content="Setting up point A&amp;B"
+                <Button Content="Setting up point A&amp;b"
                         IsEnabled="{Binding IsInputView}" />
                 <TextBlock Text="->"
                            VerticalAlignment="Center" />

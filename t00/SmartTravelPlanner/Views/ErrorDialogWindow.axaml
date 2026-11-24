@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
         x:Class="SmartTravelPlanner.Views.ErrorDialogWindow"
         x:DataType="vm:ErrorDialogViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/app.ico"
         Title="Error"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
@@ -18,7 +18,7 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:ErrorDialogViewModel />
     </Design.DataContext>
-        <StackPanel Spacing="8" 
+        <StackPanel Spacing="15" 
                 Margin="15">
                 <TextBlock Text="{Binding ErrorMessage}" />
                 <Button Content="OK"

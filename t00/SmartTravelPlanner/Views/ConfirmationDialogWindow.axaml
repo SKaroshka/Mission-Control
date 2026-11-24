@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="615" d:DesignHeight="300"
         x:Class="SmartTravelPlanner.Views.ConfirmationDialogWindow"
         x:DataType="vm:ConfirmationDialogViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/app.ico"
         Title="Unsaved changes"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
@@ -18,7 +18,7 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:ConfirmationDialogViewModel />
     </Design.DataContext>
-        <StackPanel Spacing="8"
+        <StackPanel Spacing="15"
                 Margin="15">
                 <TextBlock Text="You have unsaved changes, are you sure you want to close without saving?" />
                 <StackPanel Orientation="Horizontal" Spacing="8"

@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text;
 using System.Collections.ObjectModel;
 
 namespace SmartTravelPlanner.Models;
@@ -22,7 +23,6 @@ public class BaseModel
                 mapFileLines.Add(line);
             }
         }
-        ;
         return mapFileLines;
     }
 
@@ -40,7 +40,6 @@ public class BaseModel
                     string[] cities = parts[0].Split('-');
                     formattedMapFileLine = String.Join(" -> ", cities) + " : " + parts[1] + "km";
                 }
-                ;
                 formattedMapFileLinesCollection.Add(formattedMapFileLine);
             }
         }
@@ -52,44 +51,19 @@ public class BaseModel
                                     string? startLocation, string? destination,
                                     string? route, string? distance)
     {
-        List<string> lines = [];
+        const string Bar = "\u258C";
 
-        if (!String.IsNullOrEmpty(travelerFile))
-        {
-            lines.Add((" \u258C" + travelerFile));
-        }
+        string[] lines = [
+            .. !String.IsNullOrEmpty(travelerFile) ? (string[])[$"{Bar}{travelerFile}"] : [],
+            .. !String.IsNullOrEmpty(mapFileName) ? (string[])[$"{Bar}{mapFileName}"] : [],
+            .. !String.IsNullOrEmpty(startLocation)
+                ? (string[])[String.IsNullOrEmpty(destination) ? $"{Bar}{startLocation}" : $"{Bar}{startLocation} -> {destination}"]
+                : [],
+            .. !String.IsNullOrEmpty(route) ? (string[])[$"{Environment.NewLine}{Bar}{route}"] : [],
+            .. !String.IsNullOrEmpty(distance) ? (string[])[$"{Bar}{distance}"] : []
+        ];
 
-        if (!String.IsNullOrEmpty(mapFileName))
-        {
-            lines.Add((" \u258C" + mapFileName));
-        }
-
-        if (!String.IsNullOrEmpty(startLocation) && !String.IsNullOrEmpty(destination))
-        {
-            lines.Add((" \u258C" + startLocation + " -> " + destination));
-        }
-
-        if (!String.IsNullOrEmpty(startLocation) && String.IsNullOrEmpty(destination))
-        {
-            lines.Add((" \u258C" + startLocation));
-        }
-
-        if (!String.IsNullOrEmpty(route))
-        {
-            lines.Add((Environment.NewLine + " \u258C" + route));
-        }
-
-        if (!String.IsNullOrEmpty(distance))
-        {
-            lines.Add((" \u258C" + distance));
-        }
-
-        if (lines == null)
-        {
-            return String.Empty;
-        }
-
-        string formattedSavedData = String.Join(" ", lines);
+        string formattedSavedData = String.Join("  ", lines);
 
         return formattedSavedData;
     }
@@ -115,7 +89,6 @@ public class BaseModel
                         citiesCollection.Add(city);
                     }
                 }
-                ;
             }
         }
         citiesCollection = new(citiesCollection.Distinct());
@@ -158,9 +131,6 @@ public class BaseModel
                 currentRoute.Add(traveler[y]);
             }
             int distance = graph.GetPathDistance(currentRoute);
-            Logger<string> logger = new();
-            logger.Add($"Traveler {traveler.GetName()} planned route {startLocation} -> {destination}");
-            logger.Flush("log.txt");
             traveler.SetLocation(destination);
             string[] outputTraveler = { (traveler.GetRoute()), (distance + " km"), "" };
             TravelerClone = traveler;

@@ -139,11 +139,17 @@ public partial class MapDialogViewModel : ViewModelBase
 
             return;
         }
-        ;
+
+        if (EditorStartPoint == EditorEndPoint)
+        {
+            newMapFileLine = null;
+            await ShowErrorDialog("End city can't have same name as the start city");
+
+            return;
+        }
+
         EditorMapFileLines.Add(newMapFileLine);
-        EditorStartPoint = String.Empty;
-        EditorEndPoint = String.Empty;
-        EditorPointsDistance = String.Empty;
+        EditorStartPoint = EditorEndPoint = EditorPointsDistance = String.Empty;
         EditorTitle = ($"Editing map file \u2013 {EditorMapFilePath}*");
         _hasUnsavedChanges = true;
 
