@@ -26,10 +26,19 @@ public class IsCity : ValidationAttribute
             return ValidationResult.Success;
         }
 
-
         if (_citiesCollectionPropertyName is null || context.ObjectType
             .GetProperty(_citiesCollectionPropertyName)?
-            .GetValue(context.ObjectInstance) is not IEnumerable<string> collection || !collection.Contains(input))
+            .GetValue(context.ObjectInstance) is not IEnumerable<string> collection)
+        {
+            return new ValidationResult(ErrorMessage ?? "Please enter current location");
+        }
+
+        if (!collection.Any())
+        {
+            return ValidationResult.Success;
+        }
+
+        if (!collection.Contains(input))
         {
             return new ValidationResult(ErrorMessage ?? "Please enter existing city from the map");
         }

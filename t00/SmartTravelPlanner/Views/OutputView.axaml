@@ -1,11 +1,12 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<ContentPage xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:SmartTravelPlanner.ViewModels"
         x:Class="SmartTravelPlanner.Views.OutputView"
         x:DataType="vm:MainViewModel">
 
         <StackPanel Spacing="20">
-                <StackPanel Spacing="8">
+                <StackPanel Spacing="8"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
                         <StackPanel Spacing="4"
                                 HorizontalAlignment="Center">
                                 <TextBlock Text="Your route"
@@ -28,7 +29,7 @@
                                 Command="{Binding ClearRouteCommand}"
                                 HorizontalAlignment="Left" />
                 </StackPanel>
-                <WrapPanel HorizontalAlignment="Right">
+                <WrapPanel HorizontalAlignment="Center">
                         <Button Content="&lt;- Go back"
                                 Command="{Binding GoToInputViewCommand}"
                                 IsCancel="True" />
@@ -37,4 +38,4 @@
                 </WrapPanel>
         </StackPanel>
 
-</UserControl>
+</ContentPage>

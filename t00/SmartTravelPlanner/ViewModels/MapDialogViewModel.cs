@@ -51,7 +51,7 @@ public partial class MapDialogViewModel : ViewModelBase
 
     public Action<bool>? RequestClose { get; set; }
 
-    [GeneratedRegex(@"^([\p{L}\p{N}\p{M} '.]+)-([\p{L}\p{N}\p{M} '.]+),([0-9]+)$")]
+    [GeneratedRegex(@"^(\p{Lu}[\p{L}\p{N}\p{M} '.]*)-(\p{Lu}[\p{L}\p{N}\p{M} '.]*),([0-9]+)$")]
     private static partial Regex MapLinePattern();
 
     partial void OnEditorStartPointChanged(string value)

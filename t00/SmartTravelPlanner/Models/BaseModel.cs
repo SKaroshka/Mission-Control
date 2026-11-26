@@ -55,10 +55,10 @@ public class BaseModel
 
         string[] lines = [
             .. !String.IsNullOrEmpty(travelerFile) ? (string[])[$"{Bar}{travelerFile}"] : [],
-            .. !String.IsNullOrEmpty(mapFileName) ? (string[])[$"{Bar}{mapFileName}"] : [],
             .. !String.IsNullOrEmpty(startLocation)
                 ? (string[])[String.IsNullOrEmpty(destination) ? $"{Bar}{startLocation}" : $"{Bar}{startLocation} -> {destination}"]
                 : [],
+            .. !String.IsNullOrEmpty(mapFileName) ? (string[])[$"{Bar}{mapFileName}"] : [],
             .. !String.IsNullOrEmpty(route) ? (string[])[$"{Environment.NewLine}{Bar}{route}"] : [],
             .. !String.IsNullOrEmpty(distance) ? (string[])[$"{Bar}{distance}"] : []
         ];
@@ -98,9 +98,24 @@ public class BaseModel
 
     public static async Task<string[]?> PlanRoute(string? mapFilePath, string? travelerFile, string startLocation, string destination)
     {
-        if (string.IsNullOrEmpty(mapFilePath) || string.IsNullOrEmpty(travelerFile))
+        if (String.IsNullOrEmpty(mapFilePath))
         {
-            return (["", "", "Map file or traveler name missing"]);
+            return (["", "", "Map file not loaded"]);
+        }
+
+        if (String.IsNullOrEmpty(travelerFile))
+        {
+            return (["", "", "Traveler name missing"]);
+        }
+
+        if (!File.Exists(mapFilePath))
+        {
+            return (["", "", "Map file doesn't exist"]);
+        }
+
+        if (String.IsNullOrWhiteSpace(File.ReadAllText(mapFilePath)))
+        {
+            return ["", "", "Map file is empty"];
         }
 
         CityGraph graph;
@@ -110,18 +125,15 @@ public class BaseModel
         }
         catch
         {
-            Console.WriteLine("No route to find!");
-            return null;
+            return ["", "", "No route to find"];
         }
         Traveler traveler = new(travelerFile);
         traveler.SetLocation(startLocation);
-        var originalOut = Console.Out;
+        // var originalOut = Console.Out;
         bool isSuccess = false;
         using (var x = new StringWriter())
         {
-            Console.SetOut(x);
             isSuccess = traveler.PlanRouteTo(destination, graph);
-            Console.SetOut(originalOut);
         }
         if (isSuccess)
         {
@@ -131,7 +143,6 @@ public class BaseModel
                 currentRoute.Add(traveler[y]);
             }
             int distance = graph.GetPathDistance(currentRoute);
-            traveler.SetLocation(destination);
             string[] outputTraveler = { (traveler.GetRoute()), (distance + " km"), "" };
             TravelerClone = traveler;
             return outputTraveler;

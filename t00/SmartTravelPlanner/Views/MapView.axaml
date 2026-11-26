@@ -1,4 +1,4 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+<ContentPage xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:SmartTravelPlanner.ViewModels"
         x:Class="SmartTravelPlanner.Views.MapView"
@@ -24,7 +24,7 @@
                         </StackPanel>
                         <TextBox PlaceholderText="Nothing to preview" Text="{Binding MapPreview}" 
                                 TextAlignment="Center"
-                                MaxLines="10" TextWrapping="Wrap"
+                                MaxLines="5" TextWrapping="Wrap"
                                 Width="300" HorizontalAlignment="Center"
                                 IsReadOnly="True" />
                         <Button Content="Edit map"
@@ -33,7 +33,7 @@
                                 IsEnabled="{Binding IsOpenEditorButtonEnabled}"
                                 Width="80" HorizontalAlignment="Center" />
                 </StackPanel>
-                <WrapPanel HorizontalAlignment="Right">
+                <WrapPanel HorizontalAlignment="Center">
                         <Button Content="&lt;- Go back"
                                 Command="{Binding GoToNameViewCommand}"
                                 IsCancel="True" />
@@ -44,4 +44,4 @@
         </StackPanel>
     
 
-</UserControl>
+</ContentPage>

@@ -1,4 +1,5 @@
 <Window xmlns="https://github.com/avaloniaui"
+        xmlns:controls="using:SmartTravelPlanner.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:SmartTravelPlanner.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,75 +11,151 @@
         Icon="/Assets/app.ico"
         Title="{Binding TravelerFile, StringFormat='Smart Travel Planner ({0})', 
                                 TargetNullValue='Smart Travel Planner (New Traveler)'}"
-        Width="615"
+        Width="670"
+        Height="450"
+        MinWidth="670"
+        MinHeight="450"
         SizeToContent="WidthAndHeight"
-        CanResize="False">
+        CanResize="True">
 
-    <Design.DataContext>
-        <vm:MainViewModel />
-    </Design.DataContext>
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-                <MenuItem Header="&#x1F464; Traveler">
-                        <MenuItem Header="Save"
-                                Command="{Binding SaveTravelerCommand}"
-                                IsEnabled="{Binding IsSaveTravelerMenuItemEnabled}">
-                                <MenuItem.Icon>
-                                        <TextBlock Text="&#x1F4BE;"
-                                                HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </MenuItem.Icon>
+        <Design.DataContext>
+                <vm:MainViewModel />
+        </Design.DataContext>
+
+        <Window.Styles>
+                <Style Selector="Rectangle[Tag=Pending]">
+                        <Setter Property="Fill" Value="Gray" />
+                </Style>
+                <Style Selector="Rectangle[Tag=Error]">
+                        <Setter Property="Fill" Value="{DynamicResource SystemControlErrorTextForegroundBrush}" />
+                </Style>
+                <Style Selector="Rectangle[Tag=Correct]">
+                        <Setter Property="Fill" Value="Green" />
+                </Style>
+                <Style Selector="TextBlock.status">
+                        <Setter Property="FontWeight" Value="Regular" />
+                </Style>
+                <Style Selector="TextBlock.status.valid">
+                        <Setter Property="FontWeight" Value="Medium" />
+                </Style>
+        </Window.Styles>
+
+        <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                        <MenuItem Header="&#x1F464; Traveler">
+                                <MenuItem Header="New"
+                                        Command="{Binding CreateNewTravelerCommand}">
+                                        <MenuItem.Icon>
+                                                <TextBlock Text="&#x1F5CE;"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Save"
+                                        Command="{Binding SaveTravelerCommand}"
+                                        IsEnabled="{Binding IsSaveTravelerMenuItemEnabled}">
+                                        <MenuItem.Icon>
+                                                <TextBlock Text="&#x1F4BE;"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Load"
+                                        Command="{Binding LoadTravelerCommand}">
+                                        <MenuItem.Icon>
+                                                <TextBlock Text="&#x1F4C2;"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </MenuItem.Icon>
+                                </MenuItem>
                         </MenuItem>
-                        <MenuItem Header="Load"
-                                Command="{Binding LoadTravelerCommand}">
-                                <MenuItem.Icon>
-                                        <TextBlock Text="&#x1F4C2;"
-                                                HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </MenuItem.Icon>
-                        </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{Binding ThemeIcon}"
-                        Command="{Binding ToggleThemeCommand}" />
-                <MenuItem Header="&#x2715; Exit"
-                        Command="{Binding ExitCommand}"
-                        Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" />
-        </Menu>
+                        <MenuItem Header="{Binding ThemeIcon}"
+                                Command="{Binding ToggleThemeCommand}" />
+                        <MenuItem Header="&#x2715; Exit"
+                                Command="{Binding ExitCommand}"
+                                Foreground="{DynamicResource SystemControlErrorTextForegroundBrush}" />
+                </Menu>
 
-        <StackPanel Orientation="Horizontal"
-                DockPanel.Dock="Bottom" 
-                Spacing="8"
-                HorizontalAlignment="Center" Margin="15">
-                <Button Content="Creating traveler"
-                        IsEnabled="{Binding IsNameView}" />
-                <TextBlock Text="->"
-                           VerticalAlignment="Center" />
-                <Button Content="Loading map"
-                        IsEnabled="{Binding IsMapView}"/>
-                <TextBlock Text="->"
-                           VerticalAlignment="Center" />
-                <Button Content="Setting up point A&amp;b"
-                        IsEnabled="{Binding IsInputView}" />
-                <TextBlock Text="->"
-                           VerticalAlignment="Center" />
-                <Button Content="Getting route"
-                        IsEnabled="{Binding IsOutputView}" />
-        </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Bottom" 
+                        Spacing="8"
+                        HorizontalAlignment="Center" Margin="15">
+                        <Button Command="{Binding GoToNameViewCommand}"
+                                IsEnabled="{Binding IsNameViewEnabled}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Rectangle Tag="{Binding NameViewStatus}"
+                                                RadiusX="4" RadiusY="4"
+                                                Width="10" Height="10"
+                                                VerticalAlignment="Center" />
+                                        <TextBlock Text="Creating traveler"
+                                                Classes="status"
+                                                Classes.valid="{Binding IsOnNameView}"
+                                                VerticalAlignment="Center" />
+                                </StackPanel>
+                        </Button>
+                        <TextBlock Text="->"
+                                VerticalAlignment="Center" />
+                        <Button Command="{Binding GoToMapViewCommand}"
+                                IsEnabled="{Binding IsMapViewEnabled}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Rectangle Tag="{Binding MapViewStatus}"
+                                                RadiusX="4" RadiusY="4"
+                                                Width="10" Height="10"
+                                                VerticalAlignment="Center" />
+                                        <TextBlock Text="Loading map"
+                                                Classes="status"
+                                                Classes.valid="{Binding IsOnMapView}"
+                                                VerticalAlignment="Center" />
+                                </StackPanel>
+                        </Button>
+                        <TextBlock Text="->"
+                                VerticalAlignment="Center" />
+                        <Button Command="{Binding GoToInputViewCommand}"
+                                IsEnabled="{Binding IsInputViewEnabled}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Rectangle Tag="{Binding InputViewStatus}"
+                                                RadiusX="4" RadiusY="4"
+                                                Width="10" Height="10"
+                                                VerticalAlignment="Center" />
+                                        <TextBlock Text="Setting destination"
+                                                Classes="status"
+                                                Classes.valid="{Binding IsOnInputView}"
+                                                VerticalAlignment="Center" />
+                                </StackPanel>
+                        </Button>
+                        <TextBlock Text="->"
+                                VerticalAlignment="Center" />
+                        <Button Command="{Binding GoToOutputViewCommand}"
+                                IsEnabled="{Binding IsOutputViewEnabled}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Rectangle Tag="{Binding OutputViewStatus}"
+                                                RadiusX="4" RadiusY="4"
+                                                Width="10" Height="10"
+                                                VerticalAlignment="Center" />
+                                        <TextBlock Text="Getting route"
+                                                Classes="status"
+                                                Classes.valid="{Binding IsOnOutputView}"
+                                                VerticalAlignment="Center" />
+                                </StackPanel>
+                        </Button>
+                </StackPanel>
 
-        <StackPanel DockPanel.Dock="Bottom"
-                HorizontalAlignment="Center" Margin="0,7,0,0">
-                <TextBlock Text="{Binding FormattedSavedData}"
-                        Foreground="Gray"
-                        TextAlignment="Center"
-                        LineSpacing="7" />
-        </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom"
+                        HorizontalAlignment="Center" Margin="0,7,0,0">
+                        <TextBlock Text="{Binding FormattedSavedData}"
+                                Foreground="Gray"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap"
+                                LineSpacing="7" />
+                </StackPanel>
 
-        <Carousel SelectedIndex="{Binding CurrentPageIndex}"
-                Margin="12">
-                <views:NameView />
-                <views:MapView />
-                <views:InputView />
-                <views:OutputView />
-        </Carousel>
-    </DockPanel>
+                <controls:LockedCarouselPage SelectedIndex="{Binding CurrentPageIndex}"
+                        IsKeyboardNavigationEnabled="False"
+                        IsGestureEnabled="False"
+                        Margin="12">
+                        <views:NameView />
+                        <views:MapView />
+                        <views:InputView />
+                        <views:OutputView />
+                </controls:LockedCarouselPage>
+        </DockPanel>
     
 
 </Window>
