@@ -109,7 +109,7 @@ public partial class MainViewModel : ViewModelBase
         ValidateProperty(StartLocation, nameof(StartLocation));
 
         if (GetErrors(nameof(TravelerFile)).Any() || (GetErrors(nameof(StartLocation)).Any() && !CitiesCollection.Any())
-        || String.IsNullOrWhiteSpace(StartLocation))
+        || (String.IsNullOrWhiteSpace(StartLocation) && IsOnNameView))
         {
             NameViewStatus = ViewStatus.Error;
             return;
