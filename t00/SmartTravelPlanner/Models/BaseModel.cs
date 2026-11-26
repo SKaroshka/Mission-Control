@@ -129,7 +129,6 @@ public class BaseModel
         }
         Traveler traveler = new(travelerFile);
         traveler.SetLocation(startLocation);
-        // var originalOut = Console.Out;
         bool isSuccess = false;
         using (var x = new StringWriter())
         {
